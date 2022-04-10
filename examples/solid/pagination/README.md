@@ -1,1 +1,8 @@
-# Solid Pagination Example
+# Example: Solid Pagination
+
+All examples are included as workspaces. Run these commands in the project root directory, not in the example directory:
+
+-   `yarn`, then
+-   `yarn workspace @examples/solid-pagination dev`
+
+Lazy? [Run it on StacBlitz](https://stackblitz.com/github/izznatsir/table/tree/main/examples/solid/pagination).

@@ -1,1 +1,8 @@
-# Solid Fully Controlled Example
+# Example: Solid Fully Controlled
+
+All examples are included as workspaces. Run these commands in the project root directory, not in the example directory:
+
+-   `yarn`, then
+-   `yarn workspace @examples/solid-fully-controlled dev`
+
+Lazy? [Run it on StacBlitz](https://stackblitz.com/github/izznatsir/table/tree/main/examples/solid/fully-controlled).
