@@ -27,13 +27,13 @@
     "dependencies": {
         "@izznatsir/table-core": "workspace:*"
     },
+    "devDependencies": {
+        "solid-js": "^1.3.14"
+    },
     "peerDependencies": {
         "solid-js": ">=1"
     },
     "engines": {
         "node": ">=14"
-    },
-    "devDependencies": {
-        "solid-js": "^1.3.14"
     }
 }
