@@ -1,7 +1,6 @@
 {
     "name": "@examples/solid-pagination",
     "private": true,
-    "type": "module",
     "scripts": {
         "dev": "vite",
         "build": "vite build",

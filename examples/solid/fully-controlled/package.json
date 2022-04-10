@@ -1,7 +1,6 @@
 {
     "name": "@examples/solid-fully-controlled",
     "private": true,
-    "type": "module",
     "scripts": {
         "dev": "vite",
         "build": "vite build",

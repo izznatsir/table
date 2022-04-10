@@ -18,8 +18,8 @@
         "solid-table",
         "datagrid"
     ],
-    "type": "module",
-    "main": "dist/index.js",
+    "main": "dist/index.cjs",
+    "module": "dist/index.mjs",
     "types": "dist/types/index.d.ts",
     "files": [
         "dist"
