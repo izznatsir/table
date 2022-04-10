@@ -1,0 +1,1 @@
+# Solid Column Visibility Example
