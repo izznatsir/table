@@ -59,8 +59,8 @@ export default function App() {
         }),
     ])
 
-    const [data, setData] = createSignal(makeData(100000))
-    const refreshData = () => setData(makeData(100000))
+    const [data, setData] = createSignal(makeData(10000))
+    const refreshData = () => setData(makeData(10000))
 
     const [pagination, setPagination] = createSignal<PaginationState>({
         pageIndex: 0,
