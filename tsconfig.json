@@ -1,0 +1,4 @@
+{
+    "files": [],
+    "references": [{ "path": "packages/table-core" }, { "path": "packages/table-solid" }]
+}

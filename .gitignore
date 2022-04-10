@@ -1,0 +1,10 @@
+.DS_Store
+.parcel-cache
+.yarn/*
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+**/dist
+**/node_modules
+**/.cache
+**/.env

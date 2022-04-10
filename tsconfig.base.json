@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+        "allowSyntheticDefaultImports": true,
+        "baseUrl": ".",
+        "declaration": true,
+        "emitDeclarationOnly": true,
+        "esModuleInterop": true,
+        "lib": ["DOM", "DOM.Iterable", "ES2021"],
+        "moduleResolution": "node",
+        "paths": {
+            "@izznatsir/table-core": ["packages/table-core"],
+            "@izznatsir/table-solid": ["packages/table-solid"]
+        },
+        "skipLibCheck": true,
+        "strict": true,
+        "target": "ES2021"
+    }
+}

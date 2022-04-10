@@ -1,0 +1,11 @@
+{
+    "composite": true,
+    "compilerOptions": {
+        "jsx": "preserve",
+        "jsxImportSource": "solid-js",
+        "outDir": "dist/types"
+    },
+    "extends": "../../tsconfig.base.json",
+    "files": ["src/index.tsx"],
+    "include": ["src"]
+}
