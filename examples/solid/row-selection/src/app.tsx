@@ -1,6 +1,7 @@
 import { type JSX, createEffect, createSignal, For, splitProps } from 'solid-js'
 import {
     type Column,
+    type PaginationState,
     type RowSelectionState,
     type TableInstance,
     createTable,
@@ -74,15 +75,17 @@ export default function App() {
         }),
     ])
 
-    const [data, setData] = createSignal(makeData(100000))
-    const refreshData = () => setData(makeData(100000))
+    const [data, setData] = createSignal(makeData(1000))
+    const refreshData = () => setData(makeData(1000))
 
     const instance = useTable(table, {
         data,
         columns,
         state: () => ({
+            globalFilter: globalFilter(),
             rowSelection: rowSelection(),
         }),
+        onGlobalFilterChange: setGlobalFilter,
         onRowSelectionChange: setRowSelection,
         columnFilterRowsFn,
         globalFilterRowsFn,
@@ -132,7 +135,7 @@ export default function App() {
                     </For>
                 </thead>
                 <tbody {...instance.getTableBodyProps()}>
-                    <For each={instance.getRowModel().rows.slice(0, 10)}>
+                    <For each={instance.getRowModel().rows}>
                         {(row) => {
                             return (
                                 <tr {...row.getRowProps()}>
@@ -225,12 +228,8 @@ export default function App() {
                 </button>
             </div>
             <div>
-                <button
-                    class="border rounded p-2 mb-2"
-                    onClick={() => console.log('rowSelection', rowSelection())}
-                >
-                    Log `rowSelection` state
-                </button>
+                Selected row indexes:
+                <div>{JSON.stringify(instance.getState().rowSelection, null, 2)}</div>
             </div>
             <div>
                 <button
