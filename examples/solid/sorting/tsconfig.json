@@ -1,8 +1,15 @@
 {
     "compilerOptions": {
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
         "jsx": "preserve",
-        "jsxImportSource": "solid-js"
+        "jsxImportSource": "solid-js",
+        "lib": ["DOM", "DOM.Iterable", "ES2021"],
+        "moduleResolution": "node",
+        "noEmit": true,
+        "skipLibCheck": true,
+        "strict": true,
+        "target": "ES2021"
     },
-    "extends": "../../../tsconfig.base.json",
     "include": ["src"]
 }
