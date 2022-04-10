@@ -1,7 +1,7 @@
 {
     "name": "@natstack/table-core",
     "author": "Tanner Linsley",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "description": "Hooks for building lightweight, fast and extendable datagrids.",
     "license": "MIT",
     "homepage": "https://github.com/izznatsir/table#readme",

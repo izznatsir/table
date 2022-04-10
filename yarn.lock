@@ -1349,7 +1349,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@examples/solid-basic@workspace:examples/solid/basic"
   dependencies:
-    "@natstack/table-solid": ^0.1.0
+    "@natstack/table-solid": ^0.2.0
     "@rollup/plugin-replace": ^4.0.0
     babel-preset-solid: ^1.3.13
     solid-js: ^1.3.14
@@ -1364,7 +1364,7 @@ __metadata:
   resolution: "@examples/solid-column-ordering@workspace:examples/solid/column-ordering"
   dependencies:
     "@faker-js/faker": ^6.0.0
-    "@natstack/table-solid": ^0.1.0
+    "@natstack/table-solid": ^0.2.0
     "@rollup/plugin-replace": ^4.0.0
     babel-preset-solid: ^1.3.13
     solid-js: ^1.3.14
@@ -1379,7 +1379,7 @@ __metadata:
   resolution: "@examples/solid-column-pinning@workspace:examples/solid/column-pinning"
   dependencies:
     "@faker-js/faker": ^6.0.0
-    "@natstack/table-solid": ^0.1.0
+    "@natstack/table-solid": ^0.2.0
     "@rollup/plugin-replace": ^4.0.0
     babel-preset-solid: ^1.3.13
     solid-js: ^1.3.14
@@ -1393,7 +1393,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@examples/solid-column-sizing@workspace:examples/solid/column-sizing"
   dependencies:
-    "@natstack/table-solid": ^0.1.0
+    "@natstack/table-solid": ^0.2.0
     "@rollup/plugin-replace": ^4.0.0
     babel-preset-solid: ^1.3.13
     solid-js: ^1.3.14
@@ -1408,7 +1408,7 @@ __metadata:
   resolution: "@examples/solid-column-visibility@workspace:examples/solid/column-visibility"
   dependencies:
     "@faker-js/faker": ^6.0.0
-    "@natstack/table-solid": ^0.1.0
+    "@natstack/table-solid": ^0.2.0
     "@rollup/plugin-replace": ^4.0.0
     babel-preset-solid: ^1.3.13
     solid-js: ^1.3.14
@@ -1423,7 +1423,7 @@ __metadata:
   resolution: "@examples/solid-expanding@workspace:examples/solid/expanding"
   dependencies:
     "@faker-js/faker": ^6.0.0
-    "@natstack/table-solid": ^0.1.0
+    "@natstack/table-solid": ^0.2.0
     "@rollup/plugin-replace": ^4.0.0
     babel-preset-solid: ^1.3.13
     solid-js: ^1.3.14
@@ -1438,7 +1438,7 @@ __metadata:
   resolution: "@examples/solid-filters@workspace:examples/solid/filters"
   dependencies:
     "@faker-js/faker": ^6.0.0
-    "@natstack/table-solid": ^0.1.0
+    "@natstack/table-solid": ^0.2.0
     "@rollup/plugin-replace": ^4.0.0
     babel-preset-solid: ^1.3.13
     solid-js: ^1.3.14
@@ -1453,7 +1453,7 @@ __metadata:
   resolution: "@examples/solid-fully-controlled@workspace:examples/solid/fully-controlled"
   dependencies:
     "@faker-js/faker": ^6.0.0
-    "@natstack/table-solid": ^0.1.0
+    "@natstack/table-solid": ^0.2.0
     "@rollup/plugin-replace": ^4.0.0
     babel-preset-solid: ^1.3.13
     solid-js: ^1.3.14
@@ -1468,7 +1468,7 @@ __metadata:
   resolution: "@examples/solid-pagination@workspace:examples/solid/pagination"
   dependencies:
     "@faker-js/faker": ^6.0.0
-    "@natstack/table-solid": ^0.1.0
+    "@natstack/table-solid": ^0.2.0
     "@rollup/plugin-replace": ^4.0.0
     babel-preset-solid: ^1.3.13
     solid-js: ^1.3.14
@@ -1483,7 +1483,7 @@ __metadata:
   resolution: "@examples/solid-row-selection@workspace:examples/solid/row-selection"
   dependencies:
     "@faker-js/faker": ^6.0.0
-    "@natstack/table-solid": ^0.1.0
+    "@natstack/table-solid": ^0.2.0
     "@rollup/plugin-replace": ^4.0.0
     babel-preset-solid: ^1.3.13
     solid-js: ^1.3.14
@@ -1498,7 +1498,7 @@ __metadata:
   resolution: "@examples/solid-sorting@workspace:examples/solid/sorting"
   dependencies:
     "@faker-js/faker": ^6.0.0
-    "@natstack/table-solid": ^0.1.0
+    "@natstack/table-solid": ^0.2.0
     "@rollup/plugin-replace": ^4.0.0
     babel-preset-solid: ^1.3.13
     solid-js: ^1.3.14
@@ -1546,17 +1546,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@natstack/table-core@workspace:*, @natstack/table-core@workspace:packages/table-core":
+"@natstack/table-core@0.2.1, @natstack/table-core@workspace:packages/table-core":
   version: 0.0.0-use.local
   resolution: "@natstack/table-core@workspace:packages/table-core"
   languageName: unknown
   linkType: soft
 
-"@natstack/table-solid@^0.1.0, @natstack/table-solid@workspace:packages/table-solid":
+"@natstack/table-solid@^0.2.0, @natstack/table-solid@workspace:packages/table-solid":
   version: 0.0.0-use.local
   resolution: "@natstack/table-solid@workspace:packages/table-solid"
   dependencies:
-    "@natstack/table-core": "workspace:*"
+    "@natstack/table-core": 0.2.1
     solid-js: ^1.3.14
   peerDependencies:
     solid-js: ">=1"
