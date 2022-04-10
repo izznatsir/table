@@ -29,7 +29,9 @@ export default function App() {
                                     },
                                 })}
                             >
-                                {instance.getIsAllRowsExpanded() ? '👇' : '👉'}
+                                <Show when={instance.getIsAllRowsExpanded()} fallback="👉">
+                                    👇
+                                </Show>
                             </span>{' '}
                             First Name
                         </>
@@ -42,7 +44,7 @@ export default function App() {
                                 'padding-left': `${row.depth * 2}rem`,
                             }}
                         >
-                            {row.getCanExpand() ? (
+                            <Show when={row.getCanExpand()} fallback="🔵">
                                 <span
                                     {...row.getToggleExpandedProps({
                                         style: {
@@ -53,11 +55,11 @@ export default function App() {
                                         },
                                     })}
                                 >
-                                    {row.getIsExpanded() ? '👇' : '👉'}
+                                    <Show when={row.getIsExpanded()} fallback="👉">
+                                        👇
+                                    </Show>
                                 </span>
-                            ) : (
-                                '🔵'
-                            )}{' '}
+                            </Show>{' '}
                             {value}
                         </div>
                     ),
@@ -224,9 +226,9 @@ export default function App() {
                         instance.setPageSize(Number(e.currentTarget.value))
                     }}
                 >
-                    {[10, 20, 30, 40, 50].map((pageSize) => (
-                        <option value={pageSize}>Show {pageSize}</option>
-                    ))}
+                    <For each={[10, 20, 30, 40, 50]}>
+                        {(pageSize) => <option value={pageSize}>Show {pageSize}</option>}
+                    </For>
                 </select>
             </div>
             <div>{instance.getRowModel().rows.length} Rows</div>
@@ -241,40 +243,45 @@ export default function App() {
 function Filter({ column, instance }: { column: Column<any>; instance: TableInstance<any> }) {
     const firstValue = instance.getPreColumnFilteredRowModel().flatRows[0].values[column.id]
 
-    return typeof firstValue === 'number' ? (
-        <div class="flex space-x-2">
-            <input
-                type="number"
-                min={Number(column.getPreFilteredMinMaxValues()[0])}
-                max={Number(column.getPreFilteredMinMaxValues()[1])}
-                // @ts-expect-error
-                value={(column.getColumnFilterValue()?.[0] ?? '') as string}
-                onInput={(e) =>
-                    column.setColumnFilterValue((old: any) => [e.currentTarget.value, old?.[1]])
-                }
-                placeholder={`Min (${column.getPreFilteredMinMaxValues()[0]})`}
-                class="w-24 border shadow rounded"
-            />
-            <input
-                type="number"
-                min={Number(column.getPreFilteredMinMaxValues()[0])}
-                max={Number(column.getPreFilteredMinMaxValues()[1])}
-                // @ts-expect-error
-                value={(column.getColumnFilterValue()?.[1] ?? '') as string}
-                onInput={(e) =>
-                    column.setColumnFilterValue((old: any) => [old?.[0], e.currentTarget.value])
-                }
-                placeholder={`Max (${column.getPreFilteredMinMaxValues()[1]})`}
-                class="w-24 border shadow rounded"
-            />
-        </div>
-    ) : (
-        <input
-            type="text"
-            value={(column.getColumnFilterValue() ?? '') as string}
-            onInput={(e) => column.setColumnFilterValue(e.currentTarget.value)}
-            placeholder={`Search... (${column.getPreFilteredUniqueValues().size})`}
-            class="w-36 border shadow rounded"
-        />
+    return (
+        <Show
+            when={typeof firstValue === 'number'}
+            fallback={
+                <input
+                    type="text"
+                    value={(column.getColumnFilterValue() ?? '') as string}
+                    onInput={(e) => column.setColumnFilterValue(e.currentTarget.value)}
+                    placeholder={`Search... (${column.getPreFilteredUniqueValues().size})`}
+                    class="w-36 border shadow rounded"
+                />
+            }
+        >
+            <div class="flex space-x-2">
+                <input
+                    type="number"
+                    min={Number(column.getPreFilteredMinMaxValues()[0])}
+                    max={Number(column.getPreFilteredMinMaxValues()[1])}
+                    // @ts-expect-error
+                    value={(column.getColumnFilterValue()?.[0] ?? '') as string}
+                    onInput={(e) =>
+                        column.setColumnFilterValue((old: any) => [e.currentTarget.value, old?.[1]])
+                    }
+                    placeholder={`Min (${column.getPreFilteredMinMaxValues()[0]})`}
+                    class="w-24 border shadow rounded"
+                />
+                <input
+                    type="number"
+                    min={Number(column.getPreFilteredMinMaxValues()[0])}
+                    max={Number(column.getPreFilteredMinMaxValues()[1])}
+                    // @ts-expect-error
+                    value={(column.getColumnFilterValue()?.[1] ?? '') as string}
+                    onInput={(e) =>
+                        column.setColumnFilterValue((old: any) => [old?.[0], e.currentTarget.value])
+                    }
+                    placeholder={`Max (${column.getPreFilteredMinMaxValues()[1]})`}
+                    class="w-24 border shadow rounded"
+                />
+            </div>
+        </Show>
     )
 }

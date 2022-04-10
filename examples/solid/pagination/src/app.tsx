@@ -1,4 +1,4 @@
-import { createSignal, For } from 'solid-js'
+import { createSignal, For, Show } from 'solid-js'
 import {
     createTable,
     columnFilterRowsFn,
@@ -59,8 +59,8 @@ export default function App() {
         }),
     ])
 
-    const [data, setData] = createSignal(makeData(10000))
-    const refreshData = () => setData(makeData(10000))
+    const [data, setData] = createSignal(makeData(5000))
+    const refreshData = () => setData(makeData(5000))
 
     const [pagination, setPagination] = createSignal<PaginationState>({
         pageIndex: 0,
@@ -81,33 +81,31 @@ export default function App() {
     })
 
     return (
-        <div className="p-2">
-            <div className="h-2" />
+        <div class="p-2">
+            <div class="h-2" />
             <table {...instance.getTableProps({})}>
                 <thead>
                     <For each={instance.getHeaderGroups()}>
                         {(headerGroup) => (
                             <tr {...headerGroup.getHeaderGroupProps()}>
                                 <For each={headerGroup.headers}>
-                                    {(header) => {
-                                        return (
-                                            <th {...header.getHeaderProps()}>
-                                                {header.isPlaceholder ? null : (
-                                                    <div>
-                                                        {header.renderHeader()}
-                                                        {header.column.getCanColumnFilter() ? (
-                                                            <div>
-                                                                <Filter
-                                                                    column={header.column}
-                                                                    instance={instance}
-                                                                />
-                                                            </div>
-                                                        ) : null}
-                                                    </div>
-                                                )}
-                                            </th>
-                                        )
-                                    }}
+                                    {(header) => (
+                                        <th {...header.getHeaderProps()}>
+                                            <Show when={!header.isPlaceholder}>
+                                                <div>
+                                                    {header.renderHeader()}
+                                                    <Show when={header.column.getCanColumnFilter()}>
+                                                        <div>
+                                                            <Filter
+                                                                column={header.column}
+                                                                instance={instance}
+                                                            />
+                                                        </div>
+                                                    </Show>
+                                                </div>
+                                            </Show>
+                                        </th>
+                                    )}
                                 </For>
                             </tr>
                         )}
@@ -115,61 +113,55 @@ export default function App() {
                 </thead>
                 <tbody {...instance.getTableBodyProps()}>
                     <For each={instance.getRowModel().rows}>
-                        {(row) => {
-                            return (
-                                <tr {...row.getRowProps()}>
-                                    <For each={row.getVisibleCells()}>
-                                        {(cell) => {
-                                            return (
-                                                <td {...cell.getCellProps()}>
-                                                    {cell.renderCell()}
-                                                </td>
-                                            )
-                                        }}
-                                    </For>
-                                </tr>
-                            )
-                        }}
+                        {(row) => (
+                            <tr {...row.getRowProps()}>
+                                <For each={row.getVisibleCells()}>
+                                    {(cell) => (
+                                        <td {...cell.getCellProps()}>{cell.renderCell()}</td>
+                                    )}
+                                </For>
+                            </tr>
+                        )}
                     </For>
                 </tbody>
             </table>
-            <div className="h-2" />
-            <div className="flex items-center gap-2">
+            <div class="h-2" />
+            <div class="flex items-center gap-2">
                 <button
-                    className="border rounded p-1"
+                    class="border rounded p-1"
                     onClick={() => instance.setPageIndex(0)}
                     disabled={!instance.getCanPreviousPage()}
                 >
                     {'<<'}
                 </button>
                 <button
-                    className="border rounded p-1"
+                    class="border rounded p-1"
                     onClick={() => instance.previousPage()}
                     disabled={!instance.getCanPreviousPage()}
                 >
                     {'<'}
                 </button>
                 <button
-                    className="border rounded p-1"
+                    class="border rounded p-1"
                     onClick={() => instance.nextPage()}
                     disabled={!instance.getCanNextPage()}
                 >
                     {'>'}
                 </button>
                 <button
-                    className="border rounded p-1"
+                    class="border rounded p-1"
                     onClick={() => instance.setPageIndex(instance.getPageCount() - 1)}
                     disabled={!instance.getCanNextPage()}
                 >
                     {'>>'}
                 </button>
-                <span className="flex items-center gap-1">
+                <span class="flex items-center gap-1">
                     <div>Page</div>
                     <strong>
                         {instance.getState().pagination.pageIndex + 1} of {instance.getPageCount()}
                     </strong>
                 </span>
-                <span className="flex items-center gap-1">
+                <span class="flex items-center gap-1">
                     | Go to page:
                     <input
                         type="number"
@@ -180,7 +172,7 @@ export default function App() {
                                 : 0
                             instance.setPageIndex(page)
                         }}
-                        className="border p-1 rounded w-16"
+                        class="border p-1 rounded w-16"
                     />
                 </span>
                 <select
@@ -206,40 +198,45 @@ export default function App() {
 function Filter({ column, instance }: { column: Column<any>; instance: TableInstance<any> }) {
     const firstValue = instance.getPreColumnFilteredRowModel().flatRows[0].values[column.id]
 
-    return typeof firstValue === 'number' ? (
-        <div className="flex space-x-2">
-            <input
-                type="number"
-                min={Number(column.getPreFilteredMinMaxValues()[0])}
-                max={Number(column.getPreFilteredMinMaxValues()[1])}
-                // @ts-expect-error
-                value={(column.getColumnFilterValue()?.[0] ?? '') as string}
-                onInput={(e) =>
-                    column.setColumnFilterValue((old: any) => [e.currentTarget.value, old?.[1]])
-                }
-                placeholder={`Min (${column.getPreFilteredMinMaxValues()[0]})`}
-                className="w-24 border shadow rounded"
-            />
-            <input
-                type="number"
-                min={Number(column.getPreFilteredMinMaxValues()[0])}
-                max={Number(column.getPreFilteredMinMaxValues()[1])}
-                // @ts-expect-error
-                value={(column.getColumnFilterValue()?.[1] ?? '') as string}
-                onInput={(e) =>
-                    column.setColumnFilterValue((old: any) => [old?.[0], e.currentTarget.value])
-                }
-                placeholder={`Max (${column.getPreFilteredMinMaxValues()[1]})`}
-                className="w-24 border shadow rounded"
-            />
-        </div>
-    ) : (
-        <input
-            type="text"
-            value={(column.getColumnFilterValue() ?? '') as string}
-            onInput={(e) => column.setColumnFilterValue(e.currentTarget.value)}
-            placeholder={`Search... (${column.getPreFilteredUniqueValues().size})`}
-            className="w-36 border shadow rounded"
-        />
+    return (
+        <Show
+            when={typeof firstValue === 'number'}
+            fallback={
+                <input
+                    type="text"
+                    value={(column.getColumnFilterValue() ?? '') as string}
+                    onInput={(e) => column.setColumnFilterValue(e.currentTarget.value)}
+                    placeholder={`Search... (${column.getPreFilteredUniqueValues().size})`}
+                    class="w-36 border shadow rounded"
+                />
+            }
+        >
+            <div class="flex space-x-2">
+                <input
+                    type="number"
+                    min={Number(column.getPreFilteredMinMaxValues()[0])}
+                    max={Number(column.getPreFilteredMinMaxValues()[1])}
+                    // @ts-expect-error
+                    value={(column.getColumnFilterValue()?.[0] ?? '') as string}
+                    onInput={(e) =>
+                        column.setColumnFilterValue((old: any) => [e.currentTarget.value, old?.[1]])
+                    }
+                    placeholder={`Min (${column.getPreFilteredMinMaxValues()[0]})`}
+                    class="w-24 border shadow rounded"
+                />
+                <input
+                    type="number"
+                    min={Number(column.getPreFilteredMinMaxValues()[0])}
+                    max={Number(column.getPreFilteredMinMaxValues()[1])}
+                    // @ts-expect-error
+                    value={(column.getColumnFilterValue()?.[1] ?? '') as string}
+                    onInput={(e) =>
+                        column.setColumnFilterValue((old: any) => [old?.[0], e.currentTarget.value])
+                    }
+                    placeholder={`Max (${column.getPreFilteredMinMaxValues()[1]})`}
+                    class="w-24 border shadow rounded"
+                />
+            </div>
+        </Show>
     )
 }

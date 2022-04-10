@@ -1,5 +1,4 @@
-import { createSignal, For } from 'solid-js'
-
+import { createSignal, For, Show } from 'solid-js'
 import { createTable, useTable } from '@natstack/table-solid'
 
 type Person = {
@@ -96,7 +95,7 @@ export default function App() {
     })
 
     return (
-        <div className="p-2">
+        <div class="p-2">
             <table {...instance.getTableProps()}>
                 <thead>
                     <For each={instance.getHeaderGroups()}>
@@ -105,7 +104,9 @@ export default function App() {
                                 <For each={headerGroup.headers}>
                                     {(header) => (
                                         <th {...header.getHeaderProps()}>
-                                            {header.isPlaceholder ? null : header.renderHeader()}
+                                            <Show when={!header.isPlaceholder}>
+                                                {header.renderHeader()}
+                                            </Show>
                                         </th>
                                     )}
                                 </For>
@@ -117,9 +118,11 @@ export default function App() {
                     <For each={instance.getRowModel().rows}>
                         {(row) => (
                             <tr {...row.getRowProps()}>
-                                {row.getVisibleCells().map((cell) => (
-                                    <td {...cell.getCellProps()}>{cell.renderCell()}</td>
-                                ))}
+                                <For each={row.getVisibleCells()}>
+                                    {(cell) => (
+                                        <td {...cell.getCellProps()}>{cell.renderCell()}</td>
+                                    )}
+                                </For>
                             </tr>
                         )}
                     </For>
@@ -131,7 +134,9 @@ export default function App() {
                                 <For each={footerGroup.headers}>
                                     {(header) => (
                                         <th {...header.getFooterProps()}>
-                                            {header.isPlaceholder ? null : header.renderFooter()}
+                                            <Show when={!header.isPlaceholder}>
+                                                {header.renderFooter()}
+                                            </Show>
                                         </th>
                                     )}
                                 </For>
@@ -140,7 +145,7 @@ export default function App() {
                     </For>
                 </tfoot>
             </table>
-            <div className="h-4" />
+            <div class="h-4" />
         </div>
     )
 }

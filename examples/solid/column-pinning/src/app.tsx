@@ -1,5 +1,5 @@
-import faker from '@faker-js/faker'
 import { createSignal, For, Show } from 'solid-js'
+import faker from '@faker-js/faker'
 import {
     type ColumnOrderState,
     type ColumnPinningState,
@@ -66,7 +66,7 @@ export default function App() {
     const [columnPinning, setColumnPinning] = createSignal<ColumnPinningState>({})
 
     const [isSplit, setIsSplit] = createSignal(false)
-    const rerender = () => setData(() => makeData(5000))
+    const rerender = () => setData(makeData(5000))
 
     const instance = useTable(table, {
         data,
@@ -106,15 +106,13 @@ export default function App() {
                     </label>
                 </div>
                 <For each={instance.getAllLeafColumns()}>
-                    {(column) => {
-                        return (
-                            <div class="px-1">
-                                <label>
-                                    <input {...column.getToggleVisibilityProps()} /> {column.id}
-                                </label>
-                            </div>
-                        )
-                    }}
+                    {(column) => (
+                        <div class="px-1">
+                            <label>
+                                <input {...column.getToggleVisibilityProps()} /> {column.id}
+                            </label>
+                        </div>
+                    )}
                 </For>
             </div>
             <div class="h-4" />
@@ -149,85 +147,85 @@ export default function App() {
                             <For each={instance.getLeftHeaderGroups()}>
                                 {(headerGroup) => (
                                     <tr {...headerGroup.getHeaderGroupProps()}>
-                                        {headerGroup.headers.map((header) => (
-                                            <th {...getHeaderProps(header.getHeaderProps())}>
-                                                <div class="whitespace-nowrap">
-                                                    <Show when={!header.isPlaceholder}>
-                                                        {header.renderHeader()}
-                                                    </Show>
-                                                </div>
-                                                <Show
-                                                    when={
-                                                        !header.isPlaceholder &&
-                                                        header.column.getCanPin()
-                                                    }
-                                                >
-                                                    <div class="flex gap-1 justify-center">
-                                                        <Show
-                                                            when={
-                                                                header.column.getIsPinned() !==
-                                                                'left'
-                                                            }
-                                                        >
-                                                            <button
-                                                                class="border rounded px-2"
-                                                                onClick={() => {
-                                                                    header.column.pin('left')
-                                                                }}
-                                                            >
-                                                                {'<='}
-                                                            </button>
-                                                        </Show>
-                                                        <Show when={header.column.getIsPinned()}>
-                                                            <button
-                                                                class="border rounded px-2"
-                                                                onClick={() => {
-                                                                    header.column.pin(false)
-                                                                }}
-                                                            >
-                                                                X
-                                                            </button>
-                                                        </Show>
-                                                        <Show
-                                                            when={
-                                                                header.column.getIsPinned() ===
-                                                                'right'
-                                                            }
-                                                        >
-                                                            <button
-                                                                class="border rounded px-2"
-                                                                onClick={() => {
-                                                                    header.column.pin('right')
-                                                                }}
-                                                            >
-                                                                {'=>'}
-                                                            </button>
+                                        <For each={headerGroup.headers}>
+                                            {(header) => (
+                                                <th {...getHeaderProps(header.getHeaderProps())}>
+                                                    <div class="whitespace-nowrap">
+                                                        <Show when={!header.isPlaceholder}>
+                                                            {header.renderHeader()}
                                                         </Show>
                                                     </div>
-                                                </Show>
-                                            </th>
-                                        ))}
+                                                    <Show
+                                                        when={
+                                                            !header.isPlaceholder &&
+                                                            header.column.getCanPin()
+                                                        }
+                                                    >
+                                                        <div class="flex gap-1 justify-center">
+                                                            <Show
+                                                                when={
+                                                                    header.column.getIsPinned() !==
+                                                                    'left'
+                                                                }
+                                                            >
+                                                                <button
+                                                                    class="border rounded px-2"
+                                                                    onClick={() => {
+                                                                        header.column.pin('left')
+                                                                    }}
+                                                                >
+                                                                    {'<='}
+                                                                </button>
+                                                            </Show>
+                                                            <Show
+                                                                when={header.column.getIsPinned()}
+                                                            >
+                                                                <button
+                                                                    class="border rounded px-2"
+                                                                    onClick={() => {
+                                                                        header.column.pin(false)
+                                                                    }}
+                                                                >
+                                                                    X
+                                                                </button>
+                                                            </Show>
+                                                            <Show
+                                                                when={
+                                                                    header.column.getIsPinned() ===
+                                                                    'right'
+                                                                }
+                                                            >
+                                                                <button
+                                                                    class="border rounded px-2"
+                                                                    onClick={() => {
+                                                                        header.column.pin('right')
+                                                                    }}
+                                                                >
+                                                                    {'=>'}
+                                                                </button>
+                                                            </Show>
+                                                        </div>
+                                                    </Show>
+                                                </th>
+                                            )}
+                                        </For>
                                     </tr>
                                 )}
                             </For>
                         </thead>
                         <tbody {...instance.getTableBodyProps()}>
                             <For each={instance.getRowModel().rows.slice(0, 20)}>
-                                {(row) => {
-                                    return (
-                                        <tr {...row.getRowProps()}>
-                                            <For each={row.getLeftVisibleCells()}>
-                                                {(cell) => {
-                                                    return (
-                                                        <td {...cell.getCellProps()}>
-                                                            {cell.renderCell()}
-                                                        </td>
-                                                    )
-                                                }}
-                                            </For>
-                                        </tr>
-                                    )
-                                }}
+                                {(row) => (
+                                    <tr {...row.getRowProps()}>
+                                        <For each={row.getLeftVisibleCells()}>
+                                            {(cell) => (
+                                                <td {...cell.getCellProps()}>
+                                                    {cell.renderCell()}
+                                                </td>
+                                            )}
+                                        </For>
+                                    </tr>
+                                )}
                             </For>
                         </tbody>
                     </table>
@@ -309,25 +307,21 @@ export default function App() {
                     </thead>
                     <tbody {...instance.getTableBodyProps()}>
                         <For each={instance.getRowModel().rows.slice(0, 20)}>
-                            {(row) => {
-                                return (
-                                    <tr {...row.getRowProps()}>
-                                        <For
-                                            each={
-                                                isSplit()
-                                                    ? row.getCenterVisibleCells()
-                                                    : row.getVisibleCells()
-                                            }
-                                        >
-                                            {(cell) => (
-                                                <td {...cell.getCellProps()}>
-                                                    {cell.renderCell()}
-                                                </td>
-                                            )}
-                                        </For>
-                                    </tr>
-                                )
-                            }}
+                            {(row) => (
+                                <tr {...row.getRowProps()}>
+                                    <For
+                                        each={
+                                            isSplit()
+                                                ? row.getCenterVisibleCells()
+                                                : row.getVisibleCells()
+                                        }
+                                    >
+                                        {(cell) => (
+                                            <td {...cell.getCellProps()}>{cell.renderCell()}</td>
+                                        )}
+                                    </For>
+                                </tr>
+                            )}
                         </For>
                     </tbody>
                 </table>

@@ -1,4 +1,4 @@
-import { createSignal, For } from 'solid-js'
+import { createSignal, For, Show } from 'solid-js'
 import { type SortingState, createTable, sortRowsFn, useTable } from '@natstack/table-solid'
 import { makeData, Person } from './makeData'
 
@@ -53,8 +53,8 @@ export default function App() {
         }),
     ])
 
-    const [data, setData] = createSignal(makeData(100000))
-    const refreshData = () => setData(makeData(100000))
+    const [data, setData] = createSignal(makeData(5000))
+    const refreshData = () => setData(makeData(5000))
 
     const instance = useTable(table, {
         data,
@@ -74,28 +74,26 @@ export default function App() {
                         {(headerGroup) => (
                             <tr {...headerGroup.getHeaderGroupProps()}>
                                 <For each={headerGroup.headers}>
-                                    {(header) => {
-                                        return (
-                                            <th {...header.getHeaderProps()}>
-                                                {header.isPlaceholder ? null : (
-                                                    <div
-                                                        {...(header.column.getCanSort()
-                                                            ? header.column.getToggleSortingProps({
-                                                                  class: 'cursor-pointer select-none',
-                                                              })
-                                                            : {})}
-                                                    >
-                                                        {header.renderHeader()}
-                                                        {{
-                                                            asc: ' 🔼',
-                                                            desc: ' 🔽',
-                                                        }[header.column.getIsSorted() as string] ??
-                                                            null}
-                                                    </div>
-                                                )}
-                                            </th>
-                                        )
-                                    }}
+                                    {(header) => (
+                                        <th {...header.getHeaderProps()}>
+                                            <Show when={!header.isPlaceholder}>
+                                                <div
+                                                    {...(header.column.getCanSort()
+                                                        ? header.column.getToggleSortingProps({
+                                                              class: 'cursor-pointer select-none',
+                                                          })
+                                                        : {})}
+                                                >
+                                                    {header.renderHeader()}
+                                                    {{
+                                                        asc: ' 🔼',
+                                                        desc: ' 🔽',
+                                                    }[header.column.getIsSorted() as string] ??
+                                                        null}
+                                                </div>
+                                            </Show>
+                                        </th>
+                                    )}
                                 </For>
                             </tr>
                         )}
@@ -103,17 +101,15 @@ export default function App() {
                 </thead>
                 <tbody {...instance.getTableBodyProps()}>
                     <For each={instance.getRowModel().rows.slice(0, 10)}>
-                        {(row) => {
-                            return (
-                                <tr {...row.getRowProps()}>
-                                    <For each={row.getVisibleCells()}>
-                                        {(cell) => (
-                                            <td {...cell.getCellProps()}>{cell.renderCell()}</td>
-                                        )}
-                                    </For>
-                                </tr>
-                            )
-                        }}
+                        {(row) => (
+                            <tr {...row.getRowProps()}>
+                                <For each={row.getVisibleCells()}>
+                                    {(cell) => (
+                                        <td {...cell.getCellProps()}>{cell.renderCell()}</td>
+                                    )}
+                                </For>
+                            </tr>
+                        )}
                     </For>
                 </tbody>
             </table>

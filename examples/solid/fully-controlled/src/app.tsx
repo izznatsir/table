@@ -1,4 +1,4 @@
-import { createSignal, For } from 'solid-js'
+import { createSignal, For, Show } from 'solid-js'
 import { createTable, paginateRowsFn, useTable } from '@natstack/table-solid'
 import { makeData } from './makeData'
 
@@ -60,7 +60,7 @@ const defaultColumns = table.createColumns([
 ])
 
 export default function App() {
-    const [data] = createSignal(makeData(1000))
+    const [data] = createSignal(makeData(5000))
     const [columns] = createSignal<typeof defaultColumns>([...defaultColumns])
 
     // Create the instance and pass your options
@@ -88,7 +88,7 @@ export default function App() {
     }))
 
     return (
-        <div className="p-2">
+        <div class="p-2">
             <table {...instance.getTableProps()}>
                 <thead>
                     <For each={instance.getHeaderGroups()}>
@@ -97,7 +97,9 @@ export default function App() {
                                 <For each={headerGroup.headers}>
                                     {(header) => (
                                         <th {...header.getHeaderProps()}>
-                                            {header.isPlaceholder ? null : header.renderHeader()}
+                                            <Show when={!header.isPlaceholder}>
+                                                {header.renderHeader()}
+                                            </Show>
                                         </th>
                                     )}
                                 </For>
@@ -125,7 +127,9 @@ export default function App() {
                                 <For each={footerGroup.headers}>
                                     {(header) => (
                                         <th {...header.getFooterProps()}>
-                                            {header.isPlaceholder ? null : header.renderFooter()}
+                                            <Show when={!header.isPlaceholder}>
+                                                {header.renderFooter()}
+                                            </Show>
                                         </th>
                                     )}
                                 </For>
@@ -134,43 +138,43 @@ export default function App() {
                     </For>
                 </tfoot>
             </table>
-            <div className="h-2" />
-            <div className="flex items-center gap-2">
+            <div class="h-2" />
+            <div class="flex items-center gap-2">
                 <button
-                    className="border rounded p-1"
+                    class="border rounded p-1"
                     onClick={() => instance.setPageIndex(0)}
                     disabled={!instance.getCanPreviousPage()}
                 >
                     {'<<'}
                 </button>
                 <button
-                    className="border rounded p-1"
+                    class="border rounded p-1"
                     onClick={() => instance.previousPage()}
                     disabled={!instance.getCanPreviousPage()}
                 >
                     {'<'}
                 </button>
                 <button
-                    className="border rounded p-1"
+                    class="border rounded p-1"
                     onClick={() => instance.nextPage()}
                     disabled={!instance.getCanNextPage()}
                 >
                     {'>'}
                 </button>
                 <button
-                    className="border rounded p-1"
+                    class="border rounded p-1"
                     onClick={() => instance.setPageIndex(instance.getPageCount() - 1)}
                     disabled={!instance.getCanNextPage()}
                 >
                     {'>>'}
                 </button>
-                <span className="flex items-center gap-1">
+                <span class="flex items-center gap-1">
                     <div>Page</div>
                     <strong>
                         {instance.getState().pagination.pageIndex + 1} of {instance.getPageCount()}
                     </strong>
                 </span>
-                <span className="flex items-center gap-1">
+                <span class="flex items-center gap-1">
                     | Go to page:
                     <input
                         type="number"
@@ -181,7 +185,7 @@ export default function App() {
                                 : 0
                             instance.setPageIndex(page)
                         }}
-                        className="border p-1 rounded w-16"
+                        class="border p-1 rounded w-16"
                     />
                 </span>
                 <select
@@ -190,12 +194,12 @@ export default function App() {
                         instance.setPageSize(Number(e.currentTarget.value))
                     }}
                 >
-                    {[10, 20, 30, 40, 50].map((pageSize) => (
-                        <option value={pageSize}>Show {pageSize}</option>
-                    ))}
+                    <For each={[10, 20, 30, 40, 50]}>
+                        {(pageSize) => <option value={pageSize}>Show {pageSize}</option>}
+                    </For>
                 </select>
             </div>
-            <div className="h-4" />
+            <div class="h-4" />
         </div>
     )
 }

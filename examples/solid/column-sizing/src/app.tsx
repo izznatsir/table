@@ -1,4 +1,4 @@
-import { createSignal, For } from 'solid-js'
+import { createSignal, For, Show } from 'solid-js'
 import { createTable, useTable, ColumnResizeMode } from '@natstack/table-solid'
 
 type Person = {
@@ -138,9 +138,9 @@ export default function App() {
                                                     },
                                                 }))}
                                             >
-                                                {header.isPlaceholder
-                                                    ? null
-                                                    : header.renderHeader()}
+                                                <Show when={!header.isPlaceholder}>
+                                                    {header.renderHeader()}
+                                                </Show>
                                                 <div
                                                     {...header.getResizerProps((props: any) => ({
                                                         ...props,
@@ -226,9 +226,9 @@ export default function App() {
                                                     },
                                                 }))}
                                             >
-                                                {header.isPlaceholder
-                                                    ? null
-                                                    : header.renderHeader()}
+                                                <Show when={!header.isPlaceholder}>
+                                                    {header.renderHeader()}
+                                                </Show>
                                                 <div
                                                     {...header.getResizerProps((props: any) => ({
                                                         ...props,

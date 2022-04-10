@@ -1,5 +1,5 @@
-import faker from '@faker-js/faker'
 import { createSignal, For, Show } from 'solid-js'
+import faker from '@faker-js/faker'
 import {
     type ColumnOrderState,
     type VisibilityState,
@@ -63,7 +63,7 @@ export default function App() {
     const [columnVisibility, setColumnVisibility] = createSignal<VisibilityState>({})
     const [columnOrder, setColumnOrder] = createSignal<ColumnOrderState>([])
 
-    const rerender = () => setData(() => makeData(20))
+    const rerender = () => setData(makeData(20))
 
     const instance = useTable(table, {
         data,
@@ -94,15 +94,13 @@ export default function App() {
                     </label>
                 </div>
                 <For each={instance.getAllLeafColumns()}>
-                    {(column) => {
-                        return (
-                            <div class="px-1">
-                                <label>
-                                    <input {...column.getToggleVisibilityProps()} /> {column.id}
-                                </label>
-                            </div>
-                        )
-                    }}
+                    {(column) => (
+                        <div class="px-1">
+                            <label>
+                                <input {...column.getToggleVisibilityProps()} /> {column.id}
+                            </label>
+                        </div>
+                    )}
                 </For>
             </div>
             <div class="h-4" />

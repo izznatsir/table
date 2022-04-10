@@ -1,4 +1,4 @@
-import { createSignal, For } from 'solid-js'
+import { createSignal, For, Show } from 'solid-js'
 import {
     type Column,
     type ColumnFiltersState,
@@ -62,8 +62,8 @@ export default function App() {
         }),
     ])
 
-    const [data, setData] = createSignal(makeData(100000))
-    const refreshData = () => setData(makeData(100000))
+    const [data, setData] = createSignal(makeData(5000))
+    const refreshData = () => setData(makeData(5000))
 
     const instance = useTable(table, {
         data,
@@ -98,25 +98,21 @@ export default function App() {
                         {(headerGroup) => (
                             <tr {...headerGroup.getHeaderGroupProps()}>
                                 <For each={headerGroup.headers}>
-                                    {(header) => {
-                                        return (
-                                            <th {...header.getHeaderProps()}>
-                                                {header.isPlaceholder ? null : (
-                                                    <>
-                                                        {header.renderHeader()}
-                                                        {header.column.getCanColumnFilter() ? (
-                                                            <div>
-                                                                <Filter
-                                                                    column={header.column}
-                                                                    instance={instance}
-                                                                />
-                                                            </div>
-                                                        ) : null}
-                                                    </>
-                                                )}
-                                            </th>
-                                        )
-                                    }}
+                                    {(header) => (
+                                        <th {...header.getHeaderProps()}>
+                                            <Show when={!header.isPlaceholder}>
+                                                {header.renderHeader()}
+                                                <Show when={header.column.getCanColumnFilter()}>
+                                                    <div>
+                                                        <Filter
+                                                            column={header.column}
+                                                            instance={instance}
+                                                        />
+                                                    </div>
+                                                </Show>
+                                            </Show>
+                                        </th>
+                                    )}
                                 </For>
                             </tr>
                         )}
@@ -124,21 +120,15 @@ export default function App() {
                 </thead>
                 <tbody {...instance.getTableBodyProps()}>
                     <For each={instance.getRowModel().rows.slice(0, 10)}>
-                        {(row) => {
-                            return (
-                                <tr {...row.getRowProps()}>
-                                    <For each={row.getVisibleCells()}>
-                                        {(cell) => {
-                                            return (
-                                                <td {...cell.getCellProps()}>
-                                                    {cell.renderCell()}
-                                                </td>
-                                            )
-                                        }}
-                                    </For>
-                                </tr>
-                            )
-                        }}
+                        {(row) => (
+                            <tr {...row.getRowProps()}>
+                                <For each={row.getVisibleCells()}>
+                                    {(cell) => (
+                                        <td {...cell.getCellProps()}>{cell.renderCell()}</td>
+                                    )}
+                                </For>
+                            </tr>
+                        )}
                     </For>
                 </tbody>
             </table>
@@ -154,40 +144,45 @@ export default function App() {
 function Filter({ column, instance }: { column: Column<any>; instance: TableInstance<any> }) {
     const firstValue = instance.getPreColumnFilteredRowModel().flatRows[0].values[column.id]
 
-    return typeof firstValue === 'number' ? (
-        <div class="flex space-x-2">
-            <input
-                type="number"
-                min={Number(column.getPreFilteredMinMaxValues()[0])}
-                max={Number(column.getPreFilteredMinMaxValues()[1])}
-                // @ts-expect-error
-                value={(column.getColumnFilterValue()?.[0] ?? '') as string}
-                onInput={(e) =>
-                    column.setColumnFilterValue((old: any) => [e.currentTarget.value, old?.[1]])
-                }
-                placeholder={`Min (${column.getPreFilteredMinMaxValues()[0]})`}
-                class="w-24 border shadow rounded"
-            />
-            <input
-                type="number"
-                min={Number(column.getPreFilteredMinMaxValues()[0])}
-                max={Number(column.getPreFilteredMinMaxValues()[1])}
-                // @ts-expect-error
-                value={(column.getColumnFilterValue()?.[1] ?? '') as string}
-                onInput={(e) =>
-                    column.setColumnFilterValue((old: any) => [old?.[0], e.currentTarget.value])
-                }
-                placeholder={`Max (${column.getPreFilteredMinMaxValues()[1]})`}
-                class="w-24 border shadow rounded"
-            />
-        </div>
-    ) : (
-        <input
-            type="text"
-            value={(column.getColumnFilterValue() ?? '') as string}
-            onInput={(e) => column.setColumnFilterValue(e.currentTarget.value)}
-            placeholder={`Search... (${column.getPreFilteredUniqueValues().size})`}
-            class="w-36 border shadow rounded"
-        />
+    return (
+        <Show
+            when={typeof firstValue === 'number'}
+            fallback={
+                <input
+                    type="text"
+                    value={(column.getColumnFilterValue() ?? '') as string}
+                    onInput={(e) => column.setColumnFilterValue(e.currentTarget.value)}
+                    placeholder={`Search... (${column.getPreFilteredUniqueValues().size})`}
+                    class="w-36 border shadow rounded"
+                />
+            }
+        >
+            <div class="flex space-x-2">
+                <input
+                    type="number"
+                    min={Number(column.getPreFilteredMinMaxValues()[0])}
+                    max={Number(column.getPreFilteredMinMaxValues()[1])}
+                    // @ts-expect-error
+                    value={(column.getColumnFilterValue()?.[0] ?? '') as string}
+                    onInput={(e) =>
+                        column.setColumnFilterValue((old: any) => [e.currentTarget.value, old?.[1]])
+                    }
+                    placeholder={`Min (${column.getPreFilteredMinMaxValues()[0]})`}
+                    class="w-24 border shadow rounded"
+                />
+                <input
+                    type="number"
+                    min={Number(column.getPreFilteredMinMaxValues()[0])}
+                    max={Number(column.getPreFilteredMinMaxValues()[1])}
+                    // @ts-expect-error
+                    value={(column.getColumnFilterValue()?.[1] ?? '') as string}
+                    onInput={(e) =>
+                        column.setColumnFilterValue((old: any) => [old?.[0], e.currentTarget.value])
+                    }
+                    placeholder={`Max (${column.getPreFilteredMinMaxValues()[1]})`}
+                    class="w-24 border shadow rounded"
+                />
+            </div>
+        </Show>
     )
 }
