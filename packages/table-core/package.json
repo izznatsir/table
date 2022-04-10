@@ -1,5 +1,5 @@
 {
-    "name": "@izznatsir/table-core",
+    "name": "@natstack/table-core",
     "author": "Tanner Linsley",
     "version": "0.1.0",
     "description": "Hooks for building lightweight, fast and extendable datagrids.",
@@ -27,6 +27,9 @@
     "files": [
         "dist"
     ],
+    "scripts": {
+        "publish": "npm publish --tag latest --access public"
+    },
     "engines": {
         "node": ">=14"
     }

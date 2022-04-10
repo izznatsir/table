@@ -1,5 +1,5 @@
 import { type Component, type JSXElement, createSignal } from 'solid-js'
-export * from '@izznatsir/table-core'
+export * from '@natstack/table-core'
 
 import {
     getValue,
@@ -11,7 +11,7 @@ import {
     Table,
     init,
     AnyGenerics,
-} from '@izznatsir/table-core'
+} from '@natstack/table-core'
 
 export type Renderable<TProps> = Component<TProps> | JSXElement
 

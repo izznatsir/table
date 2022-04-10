@@ -8,8 +8,8 @@
         "lib": ["DOM", "DOM.Iterable", "ES2021"],
         "moduleResolution": "node",
         "paths": {
-            "@izznatsir/table-core": ["packages/table-core"],
-            "@izznatsir/table-solid": ["packages/table-solid"]
+            "@natstack/table-core": ["packages/table-core"],
+            "@natstack/table-solid": ["packages/table-solid"]
         },
         "skipLibCheck": true,
         "strict": true,

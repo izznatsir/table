@@ -1,6 +1,6 @@
 import { createSignal, For } from 'solid-js'
 
-import { createTable, useTable } from '@izznatsir/table-solid'
+import { createTable, useTable } from '@natstack/table-solid'
 
 type Person = {
     firstName: string

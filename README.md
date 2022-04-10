@@ -1,8 +1,8 @@
 # Table
 
-It's a collection of `@tanstack/table-core` adapters for frameworks other than `React`. Currently, it only has a `Solid` adapter published as `@izznatsir/table-solid`. In the future, these adapter packages might be transferred to `TanStack` organization.
+It's a collection of `@tanstack/table-core` adapters for frameworks other than `React`. Currently, it only has a `Solid` adapter published as `@natstack/table-solid`. In the future, these adapter packages might be transferred to `TanStack` organization.
 
-It also contains `@izznatsir/table-core` package which is extracted from my PR in `react-table` repository to work well with multiple frameworks. When that PR is merged, the package will we be removed.
+It also contains `@natstack/table-core` package which is extracted from my PR in `react-table` repository to work well with multiple frameworks. When that PR is merged, the package will we be removed.
 
 ## Documentation
 

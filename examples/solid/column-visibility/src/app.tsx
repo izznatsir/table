@@ -1,5 +1,5 @@
 import { createSignal, For, Show } from 'solid-js'
-import { type VisibilityState, createTable, useTable } from '@izznatsir/table-solid'
+import { type VisibilityState, createTable, useTable } from '@natstack/table-solid'
 
 type Person = {
     firstName: string

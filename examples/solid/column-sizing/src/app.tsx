@@ -1,5 +1,5 @@
 import { createSignal, For } from 'solid-js'
-import { createTable, useTable, ColumnResizeMode } from '@izznatsir/table-solid'
+import { createTable, useTable, ColumnResizeMode } from '@natstack/table-solid'
 
 type Person = {
     firstName: string

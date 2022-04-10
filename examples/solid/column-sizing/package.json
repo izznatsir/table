@@ -8,7 +8,7 @@
         "serve": "vite preview"
     },
     "dependencies": {
-        "@izznatsir/table-solid": "^0.1.0",
+        "@natstack/table-solid": "^0.1.0",
         "solid-js": "^1.3.14"
     },
     "devDependencies": {

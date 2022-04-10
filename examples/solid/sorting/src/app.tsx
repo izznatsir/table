@@ -1,5 +1,5 @@
 import { createSignal, For } from 'solid-js'
-import { type SortingState, createTable, sortRowsFn, useTable } from '@izznatsir/table-solid'
+import { type SortingState, createTable, sortRowsFn, useTable } from '@natstack/table-solid'
 import { makeData, Person } from './makeData'
 
 let table = createTable<{ Row: Person }>()

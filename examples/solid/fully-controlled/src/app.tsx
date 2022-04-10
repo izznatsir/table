@@ -1,5 +1,5 @@
 import { createSignal, For } from 'solid-js'
-import { createTable, paginateRowsFn, useTable } from '@izznatsir/table-solid'
+import { createTable, paginateRowsFn, useTable } from '@natstack/table-solid'
 import { makeData } from './makeData'
 
 type Person = {

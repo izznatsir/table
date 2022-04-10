@@ -5,7 +5,7 @@ import {
     type VisibilityState,
     createTable,
     useTable,
-} from '@izznatsir/table-solid'
+} from '@natstack/table-solid'
 import { makeData, Person } from './makeData'
 
 let table = createTable<{ Row: Person }>()
