@@ -10,7 +10,7 @@
     "scripts": {
         "build": "node ./scripts/build.js && tsc --build",
         "format": "prettier --write .",
-        "publish": "yarn build && yarn workspaces foreach run publish"
+        "publish": "yarn build && yarn workspaces foreach -pt --include '@natstack/*' run publish"
     },
     "devDependencies": {
         "@babel/preset-typescript": "^7.16.7",
