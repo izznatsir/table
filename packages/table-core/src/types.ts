@@ -244,56 +244,68 @@ export type CellRenderProps<TCell, TRow> = {
     row: TRow
 }
 
+export type TableRelatedRole =
+    | 'table'
+    | 'grid'
+    | 'treegrid'
+    | 'rowgroup'
+    | 'row'
+    | 'columnheader'
+    | 'rowheader'
+    | 'cell'
+    | 'gridcell'
+    | 'separator'
+
 export type TableProps = {
-    role: string
+    role: TableRelatedRole
 }
 
 export type TableBodyProps = {
-    role: string
+    role: TableRelatedRole
 }
 
 export type TableHeadProps = {
     key: string
-    role: string
+    role: TableRelatedRole
 }
 
 export type TableFooterProps = {
     key: string
-    role: string
+    role: TableRelatedRole
 }
 
 export type HeaderGroupProps = {
     key: string
-    role: string
+    role: TableRelatedRole
 }
 
 export type FooterGroupProps = {
     key: string
-    role: string
+    role: TableRelatedRole
 }
 
 export type HeaderProps = {
     key: string
-    role: string
+    role: TableRelatedRole
     colSpan?: number
     rowSpan?: number
 }
 
 export type FooterProps = {
     key: string
-    role: string
+    role: TableRelatedRole
     colSpan?: number
     rowSpan?: number
 }
 
 export type RowProps = {
     key: string
-    role: string
+    role: TableRelatedRole
 }
 
 export type CellProps = {
     key: string
-    role: string
+    role: TableRelatedRole
 }
 
 //

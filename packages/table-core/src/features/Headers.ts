@@ -12,6 +12,7 @@ import {
     PartialGenerics,
     PropGetterValue,
     TableInstance,
+    TableRelatedRole,
     Row,
 } from '../types'
 import { propGetter, memo } from '../utils'
@@ -528,7 +529,7 @@ export const Headers = {
 
                 const initialProps = {
                     key: headerGroup.id,
-                    role: 'row',
+                    role: 'row' as TableRelatedRole,
                 }
 
                 return propGetter(initialProps, userProps)
@@ -556,7 +557,7 @@ export const Headers = {
 
                 const initialProps: FooterProps = {
                     key: header.id,
-                    role: 'columnfooter',
+                    role: 'columnheader',
                     colSpan: header.colSpan,
                     rowSpan: header.rowSpan,
                 }

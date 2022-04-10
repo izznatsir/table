@@ -7,6 +7,7 @@ import {
     PartialGenerics,
     PropGetterValue,
     TableInstance,
+    TableRelatedRole,
     Updater,
 } from '../types'
 import { getValue, functionalUpdate, makeStateUpdater, memo, propGetter } from '../utils'
@@ -49,7 +50,7 @@ export type ColumnResizerProps = {
     onMouseDown?: (e: MouseEvent) => void
     onTouchStart?: (e: TouchEvent) => void
     draggable?: boolean
-    role?: string
+    role?: TableRelatedRole
 }
 
 export type ColumnSizingInstance<TGenerics extends PartialGenerics> = {
