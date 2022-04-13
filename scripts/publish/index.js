@@ -1,25 +1,26 @@
 import currentGitBranch from 'current-git-branch'
 import { examplesDir, packages, rootDir, npm_tags } from './config.js'
+import { getGitLog } from './get-git-log.js'
 
 /**
  * @param {string} version
  * @returns {string}
  */
-function createCommitMessage(version) {
+function create_commit_message(version) {
     return `release: v${version}`
 }
 
 /**
- * @param {string} tag - NPM version tag assoicated with the branch
+ * @param {string} npm_tag - NPM version tag assoicated with the branch
  * @returns { import('./types').BranchReleaseConfig }
  */
-function create_release_config(tag) {
+function create_release_config(npm_tag) {
     const config = {
         pre_release: false,
         github_release: false,
     }
 
-    switch (tag) {
+    switch (npm_tag) {
         case 'latest': {
             config.github_release = true
         }
@@ -43,6 +44,7 @@ function main() {
         ? `pr-${process.env.PR_NUMBER}`
         : currentGitBranch()
 
+    console.log(branch)
     if (!branch) return
 
     /** @type {import('./types').NpmTag | undefined} */
@@ -52,6 +54,8 @@ function main() {
 
     const branch_release_config = create_release_config(npm_tag)
 
+    getGitLog()
+
     // TODO: Check branch changes since last release, skip if RELEASE_ALL flag is set
 
     // TODO: Build packages
@@ -60,3 +64,5 @@ function main() {
 
     // TODO: Publish
 }
+
+main()
